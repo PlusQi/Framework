@@ -7,4 +7,45 @@
     <select id="findAll" resultType="cn.PlusQi.domain.User">
         select * from user
     </select>
+
+    <!-- 保存用户   -->
+    <insert id="saveUser" parameterType="cn.PlusQi.domain.User">
+        <!-- 配置插入操作后，获取插入数据的id-->
+        <selectKey keyProperty="id" keyColumn="id" resultType="integer" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        insert into user(username,address,sex,birthday)values(#{username},#{address},#{sex},#{birthday});
+    </insert>
+    
+    <!-- 更新用户   -->
+    <update id="updateUser" parameterType="cn.PlusQi.domain.User">
+        update user
+            set username = #{username},address=#{address},sex=#{sex},birthday=#{birthday}
+        where
+            id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="Integer">
+        delete from user where id=#{id};
+    </delete>
+
+    <!-- 根据id查询用户   -->
+    <select id="findById" parameterType="Integer" resultType="cn.PlusQi.domain.User">
+        select * from user where id=#{id}
+    </select>
+
+    <!-- 根据名称模糊查询用户   -->
+    <select id="findByName" parameterType="String" resultType="cn.PlusQi.domain.User">
+        select * from user where username like #{name}
+    </select>
+
+    <!-- 获取用户的总记录条数   -->
+    <select id="findTotal" resultType="integer">
+        select count(id) from user
+    </select>
+
+    <!-- 根据queryVo的条件查询用户  -->
+    <select id="findUserByVo" parameterType="cn.PlusQi.domain.QueryVo" resultType="cn.PlusQi.domain.User">
+        select *from user where username like #{user.username}
+    </select>
 </mapper>
