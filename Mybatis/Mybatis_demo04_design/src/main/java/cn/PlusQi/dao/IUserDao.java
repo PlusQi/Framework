@@ -5,7 +5,7 @@ import cn.PlusQi.mybatis.annotations.Select;
 
 import java.util.List;
 
-/*
+/**
  * 用户的持久层接口
  */
 public interface IUserDao {
